@@ -1,24 +1,14 @@
 import AddTask from "./components/AddTask";
 import Tasks from "./components/tasks";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
-  const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      title: "estudar react",
-      description: "ver curso e fazer atividades",
-      isCompleted: false,
-      isDeleted: false,
-    },
-    {
-      id: 2,
-      title: "fazer compras no supermercado",
-      description: "parte interna e externa",
-      isCompleted: false,
-      isDeleted: false,
-    }
-  ]);
+  const [tasks, setTasks] = useState(JSON.parse(localStorage.getItem("tasks")) || []);
+
+  // Executa a arrow sempre que um valor do array for alterado.
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
   function onTaskClick(taskId) {
     const newTasks = tasks.map(task => {
